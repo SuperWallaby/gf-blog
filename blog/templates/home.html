@@ -7,9 +7,9 @@
 <h1>Posts</h1>
 <ul>
 {% for post in object_list %}
-	<li><a href="{% url 'article-detail'  post.pk %}">{{post.title}}</a> - {{post.author.first_name}} {{post.author.last_name}} - <a href="{% url 'edit_post' post.pk %}">Edit Post</a> - 
+	<li><a href="{% url 'article-detail'  post.pk %}">{{post.title}}</a> - <a href="{% url 'category' post.category|slugify %}">{{post.category}}</a> - {{post.author.first_name}} {{post.author.last_name}} - <a href="{% url 'edit_post' post.pk %}">Edit Post</a> - 
 		<a href="{% url 'delete_post' post.pk %}">Delete Post</a>
-	<br/>{{post.body}}</li>
+	<br/>{{post.body|safe|slice:":250"}}</li>
 
 	<!--{{post.title}}-->
 

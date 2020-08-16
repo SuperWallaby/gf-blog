@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+{% if user.id == profile.user.id %}
+<h1>Edit Profile...</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Update Profile</button>
+
+    <br /><br />
+</form>
+{% else %}
+You're not allowed here!
+{% endif %}
+{% endif %}
+
+<script>
+    var name = "{{ user.id }}"
+    document.getElementById("elder").value = name
+</script>
+
+{% endblock %}

@@ -2,14 +2,32 @@
 
 
 {% block content %}
-<h1>Edit Post...</h1>
 
+
+{% if user.is_authenticated %} 
+<h1>Update Post...</h1>
+<br/><br/>
+
+<div class="form-group">
 <form method="POST">
 	{% csrf_token %}
+	{{ form.media }}
 	{{ form.as_p }}
-	<button>Edit Post</button>
+	<button class="btn btn-primary">Edit Post</button>
 
 <br/><br/>
 
+
+</div>
+{% else %}
+
+You are not allow here! (and you know it....)
+{% endif %}
+
+
+<script>
+	var name = "{{ user.id }}"
+	document.getElementById("elder").value = name
+</script>
 
 {% endblock %}

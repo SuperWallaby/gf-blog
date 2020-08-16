@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<h1>Create Profile</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Post</button>
+
+    <br /><br />
+</form>
+{% else %}
+You are not authorized to view this page...
+
+{% endif %}
+
+<script>
+    var name = "{{ user.id }}"
+    document.getElementById("elder").value = name
+</script>
+
+{% endblock %}
