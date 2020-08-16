@@ -14,7 +14,9 @@ class Category(models.Model):
     ('TS', 'TIME_SAPCE'),
     ('TA', 'TEMPLATE_A'),
     )
-    name = models.CharField(max_length=255)
+
+    label = models.CharField(max_length=255)
+    name = models.SlugField(max_length=255)
     super_class = models.CharField(
         max_length=2,
         choices=SUPER_CLASS,
@@ -22,7 +24,7 @@ class Category(models.Model):
     )
 
     def __str__(self):
-        return '%s - %s' % (self.super_class, self.name)
+        return '%s - %s' % (self.super_class, self.label)
 
     def get_absolute_url(self):
         return reverse('home')
