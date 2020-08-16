@@ -2,6 +2,8 @@
 
 
 {% block content %}
+
+{% if user.is_staff %}
 <h1>Delete Post...</h1>
 
 <h3>Delete: {{ post.title}}</h3>
@@ -11,5 +13,8 @@
 	<button class="btn btn-primary">Delete Post</button>
 </form>
 <br/><br/>
+{% else %}
+ you are not staff...
+{% endif %}
 
 {% endblock %}

@@ -52,7 +52,7 @@ class Post(models.Model):
     body = models.TextField()
     pub_date = models.DateField(auto_now_add=True)
     timestamp = models.DateField(auto_now_add=True)
-    category = models.CharField(max_length=255, default="")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User,related_name="blog_posts")
     body = RichTextField(blank=True, null=True)
 

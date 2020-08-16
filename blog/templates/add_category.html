@@ -3,7 +3,7 @@
 
 {% block content %}
 
-{% if user.is_authenticated %} 
+{% if user.is_staff %} 
 <h1>Add Category...</h1>
 
 <form method="POST">
