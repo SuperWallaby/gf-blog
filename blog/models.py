@@ -52,6 +52,7 @@ class Post(models.Model):
     header_image = models.ImageField(null=True, blank=True,upload_to="images/")
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
+    video = models.TextField(default="")
     pub_date = models.DateField(auto_now_add=True)
     timestamp = models.DateField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
