@@ -20,7 +20,6 @@ def LikeView(request,pk):
 	return HttpResponseRedirect(reverse('article-detail',args=[str(pk)]))
 
 
-
 class HomeView(ListView):
 	model = Post
 	template_name = 'home.html'
@@ -33,7 +32,6 @@ class HomeView(ListView):
 		context = super(HomeView, self).get_context_data(*args, **kwargs)
 		context["cat_menu"] = cat_menu
 		return context
-
 
 def CategoryListView(request):
 	cat_menu_list = Category.objects.all()
@@ -48,6 +46,23 @@ def CategoryView(request, cats):
 class ArticleDetail(DetailView):
 	model = Post
 	template_name = 'article_details.html'
+
+	# 애는 원래 어떻게 article이 article 이라는걸 알았지? 
+	# if request.method == 'POST':
+	# 	comment_form = CommentForm(data=request.POST)
+	# 	if comment_form.is_valid():
+
+    #         # Create Comment object but don't save to database yet
+	# 		new_comment = comment_form.save(commit=False)
+    #         # Assign the current post to the comment
+	# 		new_comment.article = article
+
+	# 		new_comment_date = datetime.datetime.now()
+    #         # Save the comment to the database
+	# 		new_comment.save()
+	# else:
+	# 	comment_form = CommentForm()
+
 
 	def get_context_data(self, *args, **kwargs):
 		cat_menu = Category.objects.all()

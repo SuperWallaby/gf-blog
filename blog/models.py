@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from datetime import datetime, date
 from ckeditor.fields import RichTextField
-
+from ckeditor_uploader.fields import RichTextUploadingField
+from share import models as share_models
 
 class Category(models.Model):
     BOOKING = 'BK'
@@ -45,32 +46,10 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
-
-class Notice(models.Model):
-    title = models.CharField(max_length=255)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    body = models.TextField()
-    timestamp = models.DateField(auto_now_add=True)
-    likes = models.ManyToManyField(User,related_name="blog_posts")
-    body = RichTextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.title + ' | ' + str(self.author)
-        
-    def total_likes(self):
-        return self.likes.count()
-
-class Post(models.Model):
-    title = models.CharField(max_length=255)
-    header_image = models.ImageField(null=True, blank=True,upload_to="images/")
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    body = models.TextField()
-    video = models.TextField(default="")
-    pub_date = models.DateField(auto_now_add=True)
-    timestamp = models.DateField(auto_now_add=True)
+class Post(share_models.PostTypeModel):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    likes = models.ManyToManyField(User,related_name="blog_posts")
-    body = RichTextField(blank=True, null=True)
+    likes = models.ManyToManyField(User,related_name="blog_posts",blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title + ' | ' + str(self.author)
@@ -78,14 +57,13 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
-    def total_likes(self):
-        return self.likes.count()
-
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     body = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
+
 
     def __str__(self):
         return '%s - %s' % (self.post.title, self.name)

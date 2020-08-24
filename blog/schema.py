@@ -1,5 +1,6 @@
 from graphene_django import DjangoObjectType
-from .models import Post, Category, Comment, Notice
+from .models import Post, Category, Comment 
+from notice.models import Notice
 import graphene
 from graphene import ObjectType, Schema
 
@@ -27,7 +28,7 @@ class Query(ObjectType):
     all_Posts = graphene.List(PostType)
     all_Category = graphene.List(CategoryType)
     all_Comment = graphene.List(CommentType)
-    all_Notice = graphene.list(NoticeType)
+    all_Notice = graphene.List(NoticeType)
 
     def resolve_all_Category(self, info, **kwargs):
         return Category.objects.all() 

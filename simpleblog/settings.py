@@ -25,10 +25,18 @@ SECRET_KEY = '_x0oof2u+c43ggecjbex$)-$tq&&2)-yhj%t-767u!a!!d6+fp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['manual-api.stayjanda.cloud','127.0.0.1']
 
 # Application definition
+
+CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ORIGIN_WHITELIST = [
+    "http://manual.stayjanda.cloud",
+    "https://manual.stayjanda.cloud",
+    "http://localhost:8080",
+    "http://localhost:8000",
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -39,16 +47,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'graphene_django',
     'blog',
+    'share',
+    'notice',
     'members',
-    'ckeditor'
+    'ckeditor',
+    'ckeditor_uploader',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -124,17 +137,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 GRAPHENE = {
     'SCHEMA': 'blog.schema.schema',
@@ -144,3 +154,6 @@ GRAPHENE = {
 }
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+CORS_ALLOW_CREDENTIALS = True
+                                         
