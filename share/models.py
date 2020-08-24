@@ -13,7 +13,7 @@ class PostTypeModel(models.Model):
     body = RichTextField(blank=True, null=True)
     
     def __str__(self):
-        return self.title + ' | ' + str(self.author)
+        return self.title
 
     class Meta:
       abstract = True
