@@ -8,9 +8,9 @@ from django.http import HttpResponseRedirect
 #	return render(request, 'home.html', {})
 
 def LikeView(request,pk):
-	print("likevie")
 	post = get_object_or_404(Post, id=request.POST.get('post_id'))
 	liked = False
+	# TODO like without Login ? 
 	if post.likes.filter(id=request.user.id).exists():
 		post.likes.remove(request.user)
 		liked = False
@@ -91,33 +91,5 @@ class AddCommentView(CreateView):
 		return super().form_valid(form)
 
 	success_url = reverse_lazy('home')
-
-class AddPostView(CreateView):
-	model = Post
-	form_class = PostForm
-	template_name = 'add_post.html'
-	# fields = '__all__'
-	# fields = ('title', 'body')
-
-
-class AddCategoryView(CreateView):
-	model = Category
-	# form_class = PostForm
-	template_name = 'add_category.html'
-	fields = '__all__'
-	# fields = ('title', 'body')
-
-
-class EditPostView(UpdateView):
-	model = Post
-	form_class = EditForm
-	template_name = 'edit_post.html'
-	# fields = ['title', 'body']
-
-class DeletePostView(DeleteView):
-	model = Post
-	template_name = 'delete_post.html'
-	success_url = reverse_lazy('home')
-
 
 
