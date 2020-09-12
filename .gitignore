@@ -115,3 +115,9 @@ GitHub.sublime-settings
 !.vscode/extensions.json 
 .history
 blog/migrations/0019_post_video.py
+
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

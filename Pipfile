@@ -13,6 +13,7 @@ django-filter = "*"
 django-taggit = "*"
 pillow = "*"
 django-seed = "*"
+awsebcli = "*"
 
 [requires]
 python_version = "3.8"
