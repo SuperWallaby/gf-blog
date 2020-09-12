@@ -1,0 +1,105 @@
+.comment_img,
+.comment_img_viewer {
+    width: 34px !important;
+    height: 34px !important;
+    margin-bottom: .5rem;
+    cursor: pointer;
+    padding: .1rem;
+    box-sizing: content-box;
+    border-radius: 5rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.comment_img_viewer--view {
+
+    width: 38px !important;
+    height: 38px !important;
+    cursor: auto;
+    border: none;
+}
+
+.emojiModal {
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.emojiWrap {
+    padding: .3rem .6rem;
+}
+
+
+.hidden {
+    display: none;
+}
+
+
+.like_heart {
+    padding-top: 19px;
+    width: 100%;
+    text-align: center;
+    /* color: #f33816; */
+}
+
+.like_heart--fill {
+    color: #f33816;
+}
+
+.like_heart svg {
+    cursor: pointer;
+}
+
+.liked--fill path,
+.liked--fill polygon,
+.liked--fill rect,
+.liked--fill line,
+.liked--fill circle {
+    color: red;
+    fill: currentColor;
+}
+
+.like_count {
+    display: block;
+    margin-top: -.8rem;
+    font-size: 0.875rem;
+}
+
+
+.like-wrap {
+    position: fixed;
+    bottom: 30%;
+    right: 30px;
+    z-index: 9999;
+    width: 50px;
+    display: flex;
+    justify-items: center;
+
+}
+
+.like-wrap form {
+    width: 100%;
+}
+
+.reply-btn {
+    cursor: pointer;
+}
+
+#id_name {
+    margin-bottom: .5rem;
+}
+
+.like_count {
+    margin-bottom: 1rem;
+}
+
+.like_heart {
+    margin-bottom: -1rem !important;
+}

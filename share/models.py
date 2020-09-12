@@ -5,7 +5,7 @@ from ckeditor.fields import RichTextField
 
 class PostTypeModel(models.Model):
     title = models.CharField(max_length=255)
-    thumb = models.ImageField(null=True, blank=True,upload_to="images/")
+    intro = models.TextField(max_length=255,default="")
     body = RichTextField(blank=True, null=True)
     pub_date = models.DateField(auto_now_add=True)
     timestamp = models.DateField(auto_now_add=True)

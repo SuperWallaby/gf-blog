@@ -1,0 +1,74 @@
+<!-- SIDEBAR -->
+<div id="eskimo-sidebar">
+    <div id="eskimo-sidebar-wrapper" class="d-flex align-items-start flex-column h-100 w-100">
+        <!-- LOGO -->
+        <div id="eskimo-logo-cell" class="w-100">
+            <a class="eskimo-logo-link" href="{% url 'home' %}">
+                <img src="{{ site.logo.url }}" class="eskimo-logo" alt="eskimo" />
+            </a>
+        </div>
+        <!-- MENU CONTAINER -->
+        <div id="eskimo-sidebar-cell" class="w-100">
+            <!-- MOBILE MENU BUTTON -->
+            <div id="eskimo-menu-toggle">MENU</div>
+            <!-- MENU -->
+            <nav id="eskimo-main-menu" class="menu-main-menu-container">
+                <ul class="eskimo-menu-ul">
+                    <li><a href="/">Home</a>
+                        {% comment %} <ul class="sub-menu">
+                            <li><a href="index.html">Demo 1</a></li>
+                        <li><a href="index2.html">Home</a></li>
+                            <li><a href="index3.html">Demo 3</a></li>
+                        </ul> {% endcomment %}
+                    </li>
+                    <li><a href="{% url 'about' %}">About Me</a>
+                        {% comment %} <ul class="sub-menu">
+                            <li><a href="about.html">Demo 1</a></li>
+                            <li><a href="about-2.html">Crisma</a></li>
+                        </ul> {% endcomment %}
+                    </li>
+                    <li><a href="{% url 'blog' %}">Blog</a>
+                        <ul class="sub-menu">
+                            <li><a href="{% url 'blog' %}">Main</a></li>
+                            <li><a href="{% url 'search' %}">Search</a></li>
+                            <li><a href="{% url 'tag-list' %}">Tags</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'galleries' %}">Galleries</a></li>
+                    <li><a href="{% url 'categories' %}">category</a></li>
+                    {% comment %} <li><a href="other-features.html">Other Features</a></li> {% endcomment %}
+                </ul>
+            </nav>
+        </div>
+        <!-- SOCIAL MEDIA ICONS -->
+        <div id="eskimo-social-cell" class="mt-auto w-100">
+            <div id="eskimo-social-inner">
+                <ul class="eskimo-social-icons">
+                    {% if site.facebook %}
+                    <li><a href="{{site.facebook}}"><i class="fa fa-facebook-f"></i></a></li>
+                    {% endif %}
+                    {% if site.twitter %}
+                    <li><a href="{{site.twitter}}"><i class="fa fa-twitter"></i></a></li>
+                    {% endif %}
+                    {% if site.insta %}
+                    <li><a href="{{site.insta}}"><i class="fa fa-instagram"></i></a></li>
+                    {% endif %}
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- TOP ICONS -->
+<div class="eskimo-top-icons-wrap">
+    <ul class="eskimo-top-icons">
+        <li id="eskimo-panel-icon">
+            <a href="#eskimo-panel" class="eskimo-panel-open"><i class="fa fa-bars"></i></a>
+        </li>
+        <li id="eskimo-search-icon">
+            <a id="eskimo-open-search" href="#"><i class="fa fa-search"></i></a>
+        </li>
+    </ul>
+</div>
+
+<div class="clearfix"></div>

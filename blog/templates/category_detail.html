@@ -1,0 +1,58 @@
+{% extends 'layout.html'%}
+{% load static %}
+           {%block head%}
+               <title>{{cat}}</title>
+                <meta name="description" content={{site.description_short}}>
+                <meta name="keywords" content="{{cat}}">
+           {%endblock%}
+           {%block content%}
+                <div class="clearfix"></div>
+                <!-- PAGE TITLE -->
+                <div class="eskimo-page-title">
+                    <h1><span>{{cat}}</span></h1>
+                    
+                    <p class="eskimo-page-subtitle">{{cat.description}}</p>
+                </div>
+                <!-- BLOG POSTS -->
+                <div class="eskimo-masonry-grid">
+                    <div class="eskimo-two-columns" data-columns>
+                        <!-- POST 1 ~ 8 -->
+                        {% for post in category_posts %}
+                        <div class="card-masonry">
+                            <div class="card">
+                                <a href="{% url 'article-detail' post.slug %}">
+                                    <img class="card-vertical-img" src="{{ post.photo.get_large.url }}" alt="{{ post.photo.thumb_describe }}"  />   
+                                </a>
+                                <div class="card-border">
+                                    <div class="card-body">
+                                        <div class="card-category">
+                                            <span><a href="{% url 'categories' %}">{{ post.category }}</a></span>
+                                        </div>
+                                        <h3 class="card-title">
+                                            <a href="{% url 'article-detail' post.slug %}">{{ post.title }}</a>
+                                        </h3>
+                                        <p>{{ post.intro|slice:":150" }}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="eskimo-date-meta">
+                                            <a href="{% url 'article-detail' post.slug %}">{{ post.pub_date|date }}</a>
+                                        </div>
+                                        <div class="eskimo-reading-meta">{{ post.read_time }} min read</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                            <li>No articles yet.</li>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- PAGINATION -->
+                {% include "./component/pagination.html" %}
+                <div class="clearfix"></div>
+            {% endblock %}    
+
+
+<!-- JS FILES -->
+{%block script%}
+{% endblock %}

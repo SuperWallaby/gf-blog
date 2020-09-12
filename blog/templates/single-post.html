@@ -1,180 +1,69 @@
-<!DOCTYPE html>
-<html lang="en-US">
+{% extends 'layout.html'%}
+{% load static %}
 
-<head>
-    <title>Eskimo - HTML Template</title>
-    <!-- META TAGS -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+
+{%block head%}
     <!-- CSS FILES -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="css/fontawesome.css" rel="stylesheet" type="text/css">
-    <link href="css/featherlight.css" rel="stylesheet" type="text/css">
-    <link href="css/rrssb.css" rel="stylesheet" type="text/css">
-    <link href="css/style.css" rel="stylesheet" type="text/css">
-</head>
+    <link href="{% static 'theblog/css/rrssb.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'theblog/css/custom.css' %}" rel="stylesheet" type="text/css">
+    <title>{{post.title}}</title>
+    <meta name="description" content={{post.intro}}>
+    <meta name="keywords" content={{post.title}}>>
+{% endblock %}
 
-<body>
-    <!-- READING POSITION INDICATOR -->
-    <progress value="0" id="eskimo-progress-bar">
-        <span class="eskimo-progress-container">
-            <span class="eskimo-progress-bar"></span>
-        </span>
-    </progress>
-    <!-- SITE WRAPPER -->
-    <div id="eskimo-site-wrapper">
-        <!-- MAIN CONTAINER -->
-        <main id="eskimo-main-container">
-            <div class="container">
-                <!-- SIDEBAR -->
-                <div id="eskimo-sidebar">
-                    <div id="eskimo-sidebar-wrapper" class="d-flex align-items-start flex-column h-100 w-100">
-                        <!-- LOGO -->
-                        <div id="eskimo-logo-cell" class="w-100">
-                            <a class="eskimo-logo-link" href="index.html">
-                                <img src="images/logo.png" class="eskimo-logo" alt="eskimo" />
-                            </a>
-                        </div>
-                        <!-- MENU CONTAINER -->
-                        <div id="eskimo-sidebar-cell" class="w-100">
-                            <!-- MOBILE MENU BUTTON -->
-                            <div id="eskimo-menu-toggle">MENU</div>
-                            <!-- MENU -->
-                            <nav id="eskimo-main-menu" class="menu-main-menu-container">
-                                <ul class="eskimo-menu-ul">
-                                    <li><a href="#">Home</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="index.html">Demo 1</a></li>
-                                            <li><a href="index2.html">Demo 2</a></li>
-                                            <li><a href="index3.html">Demo 3</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">About Me</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="about.html">Demo 1</a></li>
-                                            <li><a href="about-2.html">Demo 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Blog</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="blog.html">Full Width</a></li>
-                                            <li><a href="blog-2-column.html">2 Column</a></li>
-                                            <li><a href="blog-3-column.html">3 Column</a></li>
-                                            <li><a href="single-post.html">Single Post</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="galleries.html">Galleries</a></li>
-                                    <li><a href="other-features.html">Other Features</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <!-- SOCIAL MEDIA ICONS -->
-                        <div id="eskimo-social-cell" class="mt-auto w-100">
-                            <div id="eskimo-social-inner">
-                                <ul class="eskimo-social-icons">
-                                    <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
-                                </ul>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- TOP ICONS -->
-                <ul class="eskimo-top-icons">
-                    <li id="eskimo-panel-icon">
-                        <a href="#eskimo-panel" class="eskimo-panel-open"><i class="fa fa-bars"></i></a>
-                    </li>
-                    <li id="eskimo-search-icon">
-                        <a id="eskimo-open-search" href="#"><i class="fa fa-search"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
+{% static "" as baseUrl %}
+
+
+{%block content%}
                 <!-- PAGE TITLE -->
                 <div class="eskimo-page-title">
-                    <h1><span>A Single Post</span></h1>
+                    <h1><span>{{ post.title }}</span></h1>
                     <div class="eskimo-page-title-meta">
-                        <div class="eskimo-author-meta">
-                            By <a class="author-meta" href="author.html">Egemenerd</a>
-                        </div>
                         <div class="eskimo-cat-meta">
-                            In <a href="category.html">Lifestyle</a>
+                            In <a href="{% url 'category' post.category.slug %}">{{ post.category }}</a>
                         </div>
-                        <div class="eskimo-date-meta">May 25, 2018</div>
-                        <div class="eskimo-reading-meta">3 min read</div>
+                        <div class="eskimo-date-meta">{{ post.pub_date|date }}</div>
+                        <div class="eskimo-reading-meta">{{ post.read_time }} min read</div>
                     </div>
                 </div>
                 <!-- FEATURED IMAGE -->
+                {% if post.photo.get_thumb.url %}
                 <div class="eskimo-featured-img">
-                    <img src="images/1200x600.png" alt="" />
+                    <img src="{{ post.photo.get_large.url }}" alt="{{post.photo.thumb_describe}}" />
                 </div>
+                {% endif %}
                 <!-- POST CONTENT -->
                 <div class="eskimo-page-content">
-                    <p>Dolore commodo ea excepteur, do irure praetermissum aut enim proident aut laboris, an lorem irure irure commodo. Iudicem culpa litteris ad enim eu mandaremus. Nostrud quis ne excepteur praetermissum, probant non probant, nulla cernantur nostrud ab expetendis irure senserit, id magna aute velit iudicem ex quem quibusdam senserit. Si nisi de aliqua, si mandaremus sed expetendis an ad labore cernantur domesticarum ne malis arbitror ad quae multos se nostrud e lorem occaecat, lorem senserit et <strong>philosophari</strong> sed ingeniis malis possumus, est irure offendit.</p>
-                    <p>Tempor cillum nostrud ex sunt expetendis et ipsum quis. Ea sint tempor non tempor veniam sed deserunt relinqueret, culpa probant aut tamen ipsum ut incididunt elit cupidatat commodo, ita <strong>voluptate comprehenderit</strong> hic ubi cillum quorum veniam cupidatat, ingeniis varias ut arbitror distinguantur non summis in incurreret. Id veniam varias et vidisse. Do fugiat magna in proident. Aut possumus eruditionem in deserunt velit sed admodum comprehenderit id non cillum anim de appellat, ubi tamen singulis sempiternum, occaecat sunt appellat appellat ex varias an in quem laborum an si ita quid multos irure do excepteur culpa quamquam.</p>
-                    <blockquote>
-                        <p>Ne aliquip cohaerescant ad dolore offendit ex cillum quae ita ullamco duis arbitror expetendis in dolor an aliquip do summis iis ut quorum reprehenderit, ab quae nostrud efflorescere de sunt do fabulas in ea nulla id quis. Nostrud a mandaremus, qui amet iis multos. O arbitror praesentibus. Varias ubi quo nulla litteris. Anim tempor si aliqua multos. Nescius labore incurreret vidisse.</p>
-                    </blockquote>
-                    <p><a href="https://themeforest.net/user/egemenerd/portfolio?ref=egemenerd" target="_blank">Nulla nostrud aut irure noster.</a> Tempor consectetur o mentitum ne sed hic sint veniam anim. Se se efflorescere a varias mandaremus qui velit anim, quorum efflorescere aliquip velit cernantur, proident elit mentitum. Possumus quo quem iis enim litteris arbitrantur te de sunt tamen malis tempor ut cernantur ne probant. Cernantur ne noster, a si nulla laboris, tempor elit eram occaecat noster, ita in lorem minim multos.</p>
-                    <h2>A Photo Gallery</h2>
-                    <p>Qui illum fugiat velit laboris. Ad esse irure multos appellat. Ad labore mandaremus. Litteris aute ullamco iis non in coniunctione a iis possumus si admodum e enim nostrud praesentibus. Non aute transferrem te et aute fidelissimae. Mandaremus veniam ab cupidatat exquisitaque, e quae laboris domesticarum, non sint mentitum fabulas de anim proident transferrem, ita aliqua imitarentur in in labore illum eram offendit, nisi fidelissimae possumus noster ullamco se eiusmod multos ex offendit transferrem. Iudicem voluptatibus qui consequat ita litteris culpa arbitror senserit.</p>
-                    <!-- IMAGE GALLERY -->
-                    <div class="eskimo-masonry-grid eskimo-gallery">
-                        <div class="eskimo-three-columns" data-columns>
-                            <!-- GALLERY ITEM 1 -->
-                            <div class="eskimo-gallery-item">
-                                <a href="#" data-featherlight="images/1400x1000.png" class="eskimo-lightbox">
-                                <img src="images/900x600.png" alt="" />
-                            </a>
-                            </div>
-                            <!-- GALLERY ITEM 2 -->
-                            <div class="eskimo-gallery-item">
-                                <a href="#" data-featherlight="images/1400x1000.png" class="eskimo-lightbox">
-                                <img src="images/900x600.png" alt="" />
-                            </a>
-                            </div>
-                            <!-- GALLERY ITEM 3 -->
-                            <div class="eskimo-gallery-item">
-                                <a href="#" data-featherlight="images/1400x1000.png" class="eskimo-lightbox">
-                                <img src="images/900x600.png" alt="" />
-                            </a>
-                            </div>
-                            <!-- GALLERY ITEM 4 -->
-                            <div class="eskimo-gallery-item">
-                                <a href="#" data-featherlight="images/1400x1000.png" class="eskimo-lightbox">
-                                <img src="images/900x600.png" alt="" />
-                            </a>
-                            </div>
-                            <!-- GALLERY ITEM 5 -->
-                            <div class="eskimo-gallery-item">
-                                <a href="#" data-featherlight="images/1400x1000.png" class="eskimo-lightbox">
-                                <img src="images/900x600.png" alt="" />
-                            </a>
-                            </div>
-                            <!-- GALLERY ITEM 6 -->
-                            <div class="eskimo-gallery-item">
-                                <a href="#" data-featherlight="images/1400x1000.png" class="eskimo-lightbox">
-                                <img src="images/900x600.png" alt="" />
-                            </a>
-                            </div>
-                        </div>
-                    </div>
-                    <p>Incurreret elit ab excepteur praetermissum. In dolor expetendis cernantur a expetendis noster amet e quorum in fugiat cupidatat quo tamen minim sed ex quo quae irure aute. Aut ipsum mentitum, malis fabulas aut esse noster est se lorem praetermissum, quem admodum litteris. Quid instituendarum tempor varias nescius, sed fugiat tamen nulla admodum aut voluptate ipsum velit possumus magna, qui multos quibusdam praesentibus. Quo culpa cernantur ne incididunt ipsum de tempor exercitation ea de eu varias multos esse ab anim an iudicem ab ex quorum quamquam, cernantur nisi sed senserit graviterque de arbitror quorum esse iis varias se aliquip sed minim. Ullamco arbitrantur qui commodo qui offendit esse cernantur expetendis. Duis ingeniis iudicem, irure est mandaremus.</p>
+                    {{post.body|safe}}
+
+                    
+
+                    <form action="{% url 'liked_post' post.slug %}" method="post" >
+                        {% csrf_token %}
+                        <input class="hidden " id="like_input" name="post_id" type="submit" value="{{ post.pk }}" />
+                        <label class="like_heart" for="like_input">
+                            {% if liked %}
+                                {% include "./component/icon/liked.html" %}
+                            {% else %}
+                                {% include "./component/icon/unliked.html" %}
+                            {% endif %}
+                            {% if post != None %}
+                                <span class="like_count">
+                                    {{post.total_likes}}
+                                </span>
+                            {% endif %}
+                            
+                                            {{post.view_count}} views
+                        </label>
+                    </form>
+
+
                     <div class="clearfix"></div>
                     <!-- TAGS -->
                     <div class="eskimo-meta-tags">
-                        <span class="badge badge-default"><a href="category.html">commodo</a></span>
-                        <span class="badge badge-default"><a href="category.html">culpa</a></span>
-                        <span class="badge badge-default"><a href="category.html">enim</a></span>
-                        <span class="badge badge-default"><a href="category.html">magna</a></span>
-                        <span class="badge badge-default"><a href="category.html">mandaremus</a></span>
-                        <span class="badge badge-default"><a href="category.html">quorum</a></span>
-                        <span class="badge badge-default"><a href="category.html">voluptatibus</a></span>
+                    {% for t in post.tag_names %}
+                        <span class="badge badge-default"><a href="{% url 'tags' t %}">{{t}}</a></span>
+                    {% endfor %}
                     </div>
                     <!-- Responsive Social Sharing Buttons -- https://github.com/kni-labs/rrssb -->
                     <div id="eskimo-share-buttons" class="eskimo-share-buttons">
@@ -255,26 +144,31 @@
                     <!-- POST NAVIGATION -->
                     <div class="eskimo-post-nav-wrapper">
                         <!-- PREVIOUS POST -->
+                            {% if prev_post %}
                         <div class="eskimo-post-nav-left-row">
                             <div class="eskimo-post-nav-table">
-                                <a class="eskimo-post-nav" href="single-post.html">
+                                <a class="eskimo-post-nav" href="{% url 'article-detail' prev_post.slug %}">
                                     <i class="fa fa-chevron-left"></i>
                                 </a>
                                 <div class="eskimo-post-nav-link">
-                                    <a class="eskimo-post-nav" href="single-post.html">Best Breakfast In The World</a>
+                                    <a class="eskimo-post-nav" href="{% url 'article-detail' prev_post.slug %}">{{prev_post.title}}</a>
                                 </div>
                             </div>
                         </div>
+                            {% endif %}
                         <!-- NEXT POST -->
+                                {% if next_post %}
                         <div class="eskimo-post-nav-right-row">
                             <div class="eskimo-post-nav-table">
                                 <div class="eskimo-post-nav-link">
-                                    <a class="eskimo-post-nav" href="single-post.html">15 Of The World&#8217;s Best Carnivals</a>
+                                    <a class="eskimo-post-nav" href="{% url 'article-detail' next_post.slug %}">{{next_post.title}}</a>
                                 </div>
-                                <a class="eskimo-post-nav" href="single-post.html">
-                                    <i class="fa fa-chevron-right"></i></a>
+                                <a class="eskimo-post-nav" href="{% url 'article-detail' next_post.slug %}">
+                                    <i class="fa fa-chevron-right"></i>
+                                </a>
                             </div>
                         </div>
+                                {% endif %}
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -286,47 +180,58 @@
                         </h3>
                         <div class="eskimo_commentlist">
                             <!-- COMMENT 1 -->
+                            {% for comment in comments %}
+                            {% if comment.parent %}
+                            {% else %}
                             <div class="eskimo_comment_wrapper">
                                 <div class="eskimo_comments">
                                     <div class="eskimo_comment">
                                         <div class="eskimo_comment_inner">
                                             <div class="eskimo_comment_left">
-                                                <img alt='' src='images/100x100.png' />
+                                                <img alt='face' class="comment_img_viewer comment_img_viewer--view" d src='{{baseUrl}}/static/theblog/images/emoji/{{comment.face}}.png' />
                                             </div>
                                             <div class="eskimo_comment_right">
                                                 <div class="eskimo_comment_right_inner ">
                                                     <cite class="eskimo_fn">
-                                                        <a href='author.html'>Egemenerd</a>
+                                                        <a href='author.html'>{{ comment.name }}</a>
                                                     </cite>
                                                     <div class="eskimo_comment_links">
-                                                        <i class="fa fa-clock-o"></i> May 23, 2018 at 9:57 pm - <a href="#">Reply</a>
+                                                        <i class="fa fa-clock-o"></i>{{ comment.date_added|date:"M d, Y at H:m A " }}<a class="reply-btn" onclick="addComment({{comment.pk}})">- Reply</a>
                                                     </div>
                                                     <div class="eskimo_comment_text">
-                                                        <p>Tempor cillum nostrud ex sunt expetendis et ipsum quis. Ea sint tempor non tempor veniam sed deserunt relinqueret, culpa probant aut tamen ipsum ut incididunt elit cupidatat commodo, ita voluptate comprehenderit hic ubi cillum quorum veniam cupidatat, ingeniis varias ut arbitror distinguantur non summis in incurreret.</p>
+                                                        <p>{{ comment.body }}</p>
                                                     </div>
                                                 </div>
+                                                   <div style="display:none"  class="eskimo_comment_form incomment comment{{ comment.pk }}">
+                                                        <h3>Leave a Reply</h3>
+                                                        <form action="{% url 'added_post' post.slug %}" method="post" id="commentform">
+                                                            {% csrf_token %}
+                                                            {{ comment_form }}
+                                                            <input type="hidden" name="parent_id" value="{{ comment.pk }}" />
+                                                            <input  type="hidden" name="post_id" value="{{ post.pk }}" />
+                                                            <input name="submit" type="submit" id="submit" class="btn btn-default" value="Post Comment" />
+                                                        </form>
+                                                    </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- COMMENT 1 REPLY -->
+                                {% for child_comment in comment.child %}
                                 <div class="eskimo_comment_wrapper">
                                     <div class="eskimo_comments">
                                         <div class="eskimo_comment">
                                             <div class="eskimo_comment_inner">
-                                                <div class="eskimo_comment_left">
-                                                    <img alt='' src='images/100x100.png' />
-                                                </div>
                                                 <div class="eskimo_comment_right">
                                                     <div class="eskimo_comment_right_inner ">
                                                         <cite class="eskimo_fn">
-                                                            <a href='author.html'>Egemenerd</a>
+                                                            <span>{{ child_comment.name }}</span>
                                                         </cite>
                                                         <div class="eskimo_comment_links">
-                                                            <i class="fa fa-clock-o"></i> May 23, 2018 at 9:57 pm - <a href="#">Reply</a>
+                                                            <i class="fa fa-clock-o"></i>{{ child_comment.date_added|date:"M d, Y at H:m A" }}
                                                         </div>
                                                         <div class="eskimo_comment_text">
-                                                            <p>Incurreret elit ab excepteur praetermissum. In dolor expetendis cernantur a expetendis noster amet e quorum in fugiat cupidatat quo tamen minim sed ex quo quae irure aute. Aut ipsum mentitum, malis fabulas aut esse noster est se lorem praetermissum, quem admodum litteris.</p>
+                                                            <p>{{ child_comment.body }}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -334,194 +239,72 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% endfor %}
                             </div>
-                            <!-- COMMENT 2 -->
-                            <div class="eskimo_comment_wrapper">
-                                <div class="eskimo_comments">
-                                    <div class="eskimo_comment">
-                                        <div class="eskimo_comment_inner">
-                                            <div class="eskimo_comment_left">
-                                                <img alt='' src='images/100x100.png' />
-                                            </div>
-                                            <div class="eskimo_comment_right">
-                                                <div class="eskimo_comment_right_inner ">
-                                                    <cite class="eskimo_fn">
-                                                        <a href='author.html'>Egemenerd</a>
-                                                    </cite>
-                                                    <div class="eskimo_comment_links">
-                                                        <i class="fa fa-clock-o"></i> May 23, 2018 at 10:12 pm - <a href="#">Reply</a>
-                                                    </div>
-                                                    <div class="eskimo_comment_text">
-                                                        <p>Probant qui sint expetendis sed quamquam esse aute ad dolor te voluptate quid hic cupidatat exercitation, fabulas a lorem ingeniis, litteris nulla veniam a sunt id arbitror de malis ne nam quem quid quo coniunctione.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
                 <div id="eskimo_comment_form" class="eskimo_comment_form">
                     <h3>Leave a Reply</h3>
+                    <form action="{% url 'added_post' post.slug %}" method="post" id="commentform">
+                            <div>
+                            <img class="comment_img_viewer comment_img_viewer--change" data-toggle="modal" data-target="#exampleModal" onclick="$(this).next().css('display:true')" src="{% static 'theblog/images/emoji/1.png' %}"/>
+                            </div>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                       <div class="flex modal-body">
+      
+                            {% for i in '123456789012345678901234567890123456'|make_list %}
+                                <div class="emojiWrap">
+                                <input id="face{{forloop.counter}}" type="radio" name="face" value={{forloop.counter}} >
+                                <label for="face{{forloop.counter}}">
+                                <img class="comment_img" src="{{baseUrl}}/static/theblog/images/emoji/{{forloop.counter}}.png"/>
+                                </label>
+                                </div>
+                            {% endfor %}
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button onclick="changeImg('{{baseUrl}}/static/theblog/images/emoji/')" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                        {{ comment_form }}
+                        <input  type="hidden" name="post_id" value="{{ post.pk }}" />
+                        <input name="submit" type="submit" id="submit" class="btn btn-default" value="Post Comment" />
+                    </form>
+                </div>
+
+                
+                
+                {% comment %} <div id="eskimo_comment_form" class="eskimo_comment_form">
+                    <h3>Leave a Reply</h3>
                     <form action="single-post.html" method="post" id="commentform">
                         <p><textarea id="comment" name="comment" cols="45" rows="8" required="required"></textarea></p>
                         <input name="submit" type="submit" id="submit" class="btn btn-default" value="Post Comment" />
                     </form>
-                </div>
-            </div>
-        </main>
-        <!-- FOOTER -->
-        <footer id="eskimo-footer">
-            <div class="container">
-                <div class="row eskimo-footer-wrapper">
-                    <!-- FOOTER WIDGET 1 -->
-                    <div class="col-12 col-lg-6 mb-4 mb-lg-0">
-                        <h5 class="eskimo-title-with-border"><span>About Me</span></h5>
-                        <p>Trusted by thousands of customers, my unique themes and plugins help you make beautiful responsive web sites with ease.</p>
-                        <p><a href="about.html" class="btn btn-default">Read More</a></p>
-                    </div>
-                    <!-- FOOTER WIDGET 2 -->
-                    <div class="col-12 col-lg-6">
-                        <h5 class="eskimo-title-with-border"><span>Newsletter</span></h5>
-                        <form method="post" action="index.html">
-                            <label>Subscribe to our mailing list!</label>
-                            <div class="input-group">
-                                <input type="email" class="form-control" name="EMAIL" placeholder="Your email address" required />
-                                <div class="input-group-append">
-                                    <input type="submit" value="Sign up" class="btn btn-default" />
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- CREDITS -->
-                <div class="eskimo-footer-credits">
-                    <p>
-                        Made with love by <a href="https://themeforest.net/user/egemenerd" target="_blank">Egemenerd</a>
-                    </p>
-                </div>
-            </div>
-        </footer>
-    </div>
-    <!-- GO TO TOP BUTTON -->
-    <a id="eskimo-gototop" href="#"><i class="fa fa-chevron-up"></i></a>
-    <!-- SLIDE PANEL OVERLAY -->
-    <div id="eskimo-overlay"></div>
-    <!-- SLIDE PANEL -->
-    <div id="eskimo-panels">
-        <aside id="eskimo-panel" class="eskimo-panel">
-            <div class="eskimo-panel-inner">
-                <!-- CLOSE SLIDE PANEL BUTTON -->
-                <a href="#" class="eskimo-panel-close"><i class="fa fa-times"></i></a>
-                <!-- AUTHOR BOX -->
-                <div class="eskimo-author-box eskimo-widget">
-                    <div class="eskimo-author-img">
-                        <img src="images/300x300.png" alt="JOHN DOE" />
-                    </div>
-                    <h3><span>JOHN DOE</span></h3>
-                    <p class="eskimo-author-subtitle">WEB DESIGNER &amp; DEVELOPER</p>
-                    <p class="eskimo-author-description">I'm a Web Developer and Designer with a strong passion for UX/UI design. I have experience building websites, web applications, and brand assets. Contact me if you have any questions!</p>
-                    <div class="eskimo-author-box-btn">
-                        <a class="btn btn-default" href="about.html">CONTACT ME</a>
-                    </div>
-                </div>
-                <!-- RECENT POSTS -->
-                <div class="eskimo-recent-entries eskimo-widget">
-                    <h5 class="eskimo-title-with-border"><span>Recent Posts</span></h5>
-                    <ul>
-                        <li>
-                            <a href="single-post.html">Ketchup Flavored Ice Cream!</a>
-                            <span class="post-date">May 28, 2018</span>
-                        </li>
-                        <li>
-                            <a href="single-post.html">Hair You've Always Dreamed Of</a>
-                            <span class="post-date">May 27, 2018</span>
-                        </li>
-                        <li>
-                            <a href="single-post.html">15 Of The World's Best Carnivals</a>
-                            <span class="post-date">May 25, 2018</span>
-                        </li>
-                        <li>
-                            <a href="single-post.html">5 Ways to a Healthy Lifestyle</a>
-                            <span class="post-date">May 25, 2018</span>
-                        </li>
-                        <li>
-                            <a href="single-post.html">Best Breakfast In The World</a>
-                            <span class="post-date">May 23, 2018</span>
-                        </li>
-                    </ul>
-                </div>
-                <!-- CATEGORIES -->
-                <div class="eskimo-categories eskimo-widget">
-                    <h5 class="eskimo-title-with-border"><span>Categories</span></h5>
-                    <ul>
-                        <li>
-                            <a href="category.html" title="The best restaurants, cafes, bars and shops in town.">Food &amp; Drink</a> <span class="badge badge-pill badge-default">5</span>
-                        </li>
-                        <li>
-                            <a href="category.html" title="An up-to-date, personal urban guide.">Lifestyle</a> <span class="badge badge-pill badge-default">5</span>
-                        </li>
-                        <li>
-                            <a href="category.html" title="Latest technology news and updates.">Technology</a> <span class="badge badge-pill badge-default">4</span>
-                        </li>
-                        <li>
-                            <a href="category.html" title="Travel advice, information and inspiration.">Travel</a> <span class="badge badge-pill badge-default">5</span>
-                        </li>
-                        <li>
-                            <a href="category.html" title="The latest news about movies and TV shows.">TV &amp; Movies</a> <span class="badge badge-pill badge-default">4</span>
-                        </li>
-                    </ul>
-                </div>
-                <!-- TAGS -->
-                <div class="eskimo-widget">
-                    <h5 class="eskimo-title-with-border"><span>Tags</span></h5>
-                    <div class="eskimo-tag-cloud">
-                        <a href="category.html">aute<span>7</span></a>
-                        <a href="category.html">enim<span>7</span></a>
-                        <a href="category.html">commodo<span>7</span></a>
-                        <a href="category.html">voluptatibus<span>7</span></a>
-                        <a href="category.html">culpa<span>7</span></a>
-                        <a href="category.html">offendit<span>7</span></a>
-                        <a href="category.html">magna<span>7</span></a>
-                        <a href="category.html">quorum<span>7</span></a>
-                        <a href="category.html">mandaremus<span>7</span></a>
-                        <a href="category.html">ingeniis<span>7</span></a>
-                        <a href="category.html">tempor<span>7</span></a>
-                        <a href="category.html">summis<span>7</span></a>
-                        <a href="category.html">consequat<span>6</span></a>
-                        <a href="category.html">iudicem<span>6</span></a>
-                        <a href="category.html">expetendis<span>6</span></a>
-                        <a href="category.html">deserunt<span>6</span></a>
-                    </div>
-                </div>
-            </div>
-        </aside>
-    </div>
-    <!-- FULLSCREEN SEARCH -->
-    <div id="eskimo-fullscreen-search">
-        <div id="eskimo-fullscreen-search-content">
-            <a href="#" id="eskimo-close-search"><i class="fa fa-times"></i></a>
-            <form role="search" method="get" action="search.html" class="eskimo-lg-form">
-                <div class="input-group">
-                    <input type="text" class="form-control form-control-lg" placeholder="Enter a keyword..." name="s" />
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <!-- JS FILES -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/salvattore.min.js"></script>
-    <script src="js/panel.js"></script>
-    <script src="js/reading-position-indicator.js"></script>
-    <script src="js/rrssb.min.js"></script>
-    <script src="js/featherlight.js"></script>
-    <script src="js/custom.js"></script>
-</body>
+                </div> {% endcomment %}
+{% endblock %}
 
-</html>
+<!-- JS FILES -->
+{%block script%}
+    <script type="text/javascript" src="{% static 'theblog/js/rrssb.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'theblog/js/featherlight.js' %}"></script>
+    <script type="text/javascript" src="{% static 'theblog/js/my.js' %}"></script>
+    <script>
+        function addComment(pk) {
+            document.querySelector(".incomment").style.display="none"
+            document.querySelector(".comment" + pk).style.display="block"
+        }
+    </script>
+{% endblock %}

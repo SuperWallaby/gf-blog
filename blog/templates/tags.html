@@ -1,0 +1,70 @@
+
+{% extends 'layout.html'%}
+
+
+{% load static %}
+{%block head%}
+    <title>Tags {{tag}}</title>
+    <meta name="description" content={{site.description_short}}>
+    <meta name="keywords" content={{tag}}>>
+{% endblock %}
+
+
+{%block content%}
+                <!-- SEARCH FORM -->
+                <div class="eskimo-widget">
+                    <h5 class="eskimo-title-with-border"><span>Tags</span></h5>
+                    <div class="eskimo-tag-cloud">
+                        {% for tag in tags %}
+                        <a href="{% url 'tags' tags=tag %}">{{tag.name}}<span>
+                        {% for key, value in tag_count_dict.items %}
+                                {% if tag.name == key %}
+                                    {{value}}
+                                {% endif %}
+                            {% endfor %}
+                        </span></a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- BLOG POSTS -->
+                <div class="eskimo-masonry-grid">
+                    <div class="eskimo-two-columns" data-columns>
+                        <!-- POST 1 -->
+                        {% for post in posts %}
+                        <div class="card-masonry">
+                            <div class="card">
+                                <a href="{% url 'article-detail' post.slug %}">
+                                    <img class="card-vertical-img" src="{{post.photo.integrated_thumb.url}}" alt="{{post.photo.thumb_describe}}" />   
+                                </a>
+                                <div class="card-border">
+                                    <div class="card-body">
+                                        <div class="card-category">
+                                            <span><a href="{% url 'category' post.category.slug %}">{{post.category}}</a></span>
+                                        </div>
+                                        <h3 class="card-title">
+                                            <a href="{% url 'article-detail' post.slug %}">{{post.title}}</a>
+                                        </h3>
+                                        <p> 
+                                        {{post.body|slice:":150"}}...
+                                        </p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="eskimo-date-meta">
+                                            <a href="{% url 'article-detail' post.slug %}">{{ post.pub_date }}</a>
+                                        </div>
+                                        <div class="eskimo-reading-meta">{{ post.read_time }} min read</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor%}
+                    </div>
+                </div>
+                {% include "./component/pagination.html" %}
+                <div class="clearfix"></div>
+{% endblock %}          
+          
+{%block script%}
+    <script type="text/javascript" src="{% static 'theblog/js/panel.js' %}"></script>
+    <script type="text/javascript" src="{% static 'theblog/js/reading-position-indicator.js' %}"></script>
+{% endblock %}

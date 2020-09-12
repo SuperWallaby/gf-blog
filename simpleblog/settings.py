@@ -41,19 +41,22 @@ CORS_ORIGIN_WHITELIST = [
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'graphene_django',
     'blog',
     'share',
-    'notice',
-    'members',
     'ckeditor',
     'ckeditor_uploader',
     'corsheaders',
+    'django_filters',
+    'taggit'
 ]
+
+SITE_ID = 134234
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -80,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'blog.context_processors.extras',
             ],
         },
     },
@@ -146,14 +150,11 @@ STATICFILES_DIRS = (
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
-GRAPHENE = {
-    'SCHEMA': 'blog.schema.schema',
-    'MIDDLEWARE': (
-        'graphene_django.debug.DjangoDebugMiddleware',
-    )
-}
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 CORS_ALLOW_CREDENTIALS = True
                                          
+if DEBUG:
+    import mimetypes
+    mimetypes.add_type("application/javascript", ".js", True)

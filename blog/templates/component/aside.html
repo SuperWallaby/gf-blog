@@ -1,0 +1,68 @@
+<div id="eskimo-panels">
+    <aside id="eskimo-panel" class="eskimo-panel">
+        <div class="eskimo-panel-inner">
+            <!-- CLOSE SLIDE PANEL BUTTON -->
+            <a href="#" class="eskimo-panel-close"><i class="fa fa-times"></i></a>
+            <!-- AUTHOR BOX -->
+            <div class="eskimo-author-box eskimo-widget">
+                <div class="eskimo-author-img">
+                    <img src="{{profile.photo_small.url}}" alt="JOHN DOE" />
+                </div>
+                <h3><span>{{profile.name}}</span></h3>
+                <p class="eskimo-author-subtitle">{{profile.job}}</p>
+                <p class="eskimo-author-description">{{profile.description_short}}</p>
+                <div class="eskimo-author-box-btn">
+                    <a class="btn btn-default" href="{% url 'about' %}">CONTACT ME</a>
+                </div>
+            </div>
+            <!-- RECENT POSTS -->
+            <div class="eskimo-recent-entries eskimo-widget">
+                <h5 class="eskimo-title-with-border"><span>Recent Posts</span></h5>
+                <ul>
+                    {%for post in recent_post %}
+                    <li>
+                        <a href="{% url 'article-detail' post.slug %}">{{post.title}}</a>
+                        <span class="post-date">{{post.pub_date|date}}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- CATEGORIES -->
+            <div class="eskimo-categories eskimo-widget">
+                <h5 class="eskimo-title-with-border"><span>Categories</span></h5>
+                <ul>
+                    {%for cat in cats %}
+                    <li>
+                        <a href="{% url 'category' cat.slug %}" title="The best restaurants, cafes, bars and shops in town.">{{cat.name}}</a> <span class="badge badge-pill badge-default">
+                        {% for key, value in cat_dict.items %}
+                            {% if cat.pk == key %}
+                            {% if value %}
+                                {{ value  }}
+                            {% else %}
+                                0
+                            {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- TAGS -->
+            <div class="eskimo-widget">
+                <h5 class="eskimo-title-with-border"><span>Tags</span></h5>
+                <div class="eskimo-tag-cloud">
+                    {% for tag in tags %}
+                    <a href="{% url 'tags' tag.name  %}">{{tag.name}}<span>
+                     {% for key, value in tag_count_dict.items %}
+                            {% if tag.name == key %}
+                                {{value}}
+                            {% endif %}
+                        {% endfor %}
+                    </span></a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>

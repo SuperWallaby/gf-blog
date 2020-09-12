@@ -1,0 +1,36 @@
+
+{% extends 'layout.html'%}
+
+
+{% load static %}
+
+{%block head%}
+    <title>Categories</title>
+    <meta name="description" content={{site.description_short}}>
+    <meta name="keywords" content='{{site_key_words}}'>
+{% endblock %}
+
+
+{%block content%}
+  <div class="eskimo-categories eskimo-widget">
+                <h5 class="eskimo-title-with-border"><span>Categories</span></h5>
+          
+<ul>
+    {%for cat in cats %}
+    <li>
+        <a href="{% url 'category' cat.slug %}" title="The best restaurants, cafes, bars and shops in town.">{{cat.name}}</a> <span class="badge badge-pill badge-default">
+        {% for key, value in cat_dict.items %}
+            {% if cat.pk == key %}
+            {% if value %}
+                {{ value  }}
+            {% else %}
+                0
+            {% endif %}
+            {% endif %}
+        {% endfor %}
+        </span>
+    </li>
+    {% endfor %}
+</ul>
+</div>
+{% endblock %}
