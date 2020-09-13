@@ -151,7 +151,7 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static/theblog'),
 )
-AWS_S3_HOST = 's3.eu-west-3.amazonaws.com'
+AWS_S3_HOST = 's3.me-south-1.amazonaws.com'
 AWS_S3_REGION_NAME= config('AWS_S3_REGION_NAME')
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_kEY = config('AWS_SECRET_ACCESS_kEY')
