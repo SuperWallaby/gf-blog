@@ -26,7 +26,7 @@ SECRET_KEY = '_x0oof2u+c43ggecjbex$)-$tq&&2)-yhj%t-767u!a!!d6+fp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['ec2-15-237-45-28.eu-west-3.compute.amazonaws.com','127.0.0.1']
+ALLOWED_HOSTS = ['mycrisma.com','ec2-15-237-45-28.eu-west-3.compute.amazonaws.com','127.0.0.1','']
 
 # Application definition
 
@@ -147,16 +147,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static/theblog'),
 )
 AWS_S3_HOST = 's3.eu-west-3.amazonaws.com'
-AWS_S3_REGION_NAME='eu-west-3'
-AWS_ACCESS_KEY_ID = 'AKIARVBBIM6NGTM4WWPX'
+AWS_S3_REGION_NAME= config('AWS_S3_REGION_NAME')
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_kEY = config('AWS_SECRET_ACCESS_kEY')
-AWS_STORAGE_BUCKET_NAME = 'gfs3'
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
 
 AWS_S3_FILE_OVERWIRTE = False
 AWS_DEFAULT_ACL = None
@@ -171,7 +170,13 @@ LOGOUT_REDIRECT_URL = 'home'
 CORS_ALLOW_CREDENTIALS = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-                                         
+
+AMAZONE_CREDENTIAL = {
+    'ACCESS_KEY_ID': 'AKIARVBBIM6NGTM4WWPX',
+    'SECRET_ACCESS_kEY':  config('AWS_SECRET_ACCESS_kEY'),
+    'STORAGE_BUCKET_NAME': 'gfs3'
+}
+
 if DEBUG:
     import mimetypes
     mimetypes.add_type("application/javascript", ".js", True)
