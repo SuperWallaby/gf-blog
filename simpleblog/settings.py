@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '_x0oof2u+c43ggecjbex$)-$tq&&2)-yhj%t-767u!a!!d6+fp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['ec2-15-237-45-28.eu-west-3.compute.amazonaws.com']
+ALLOWED_HOSTS = ['ec2-15-237-45-28.eu-west-3.compute.amazonaws.com','127.0.0.1']
 
 # Application definition
 
@@ -53,7 +54,9 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'corsheaders',
     'django_filters',
-    'taggit'
+    'taggit',
+    'storages',
+
 ]
 
 SITE_ID = 134234
@@ -99,6 +102,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'OPTIONS': {
+            'timeout': 60,
+        }
     }
 }
 
@@ -144,9 +150,18 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static/theblog'),
 )
+AWS_S3_HOST = 's3.eu-west-3.amazonaws.com'
+AWS_S3_REGION_NAME='eu-west-3'
+AWS_ACCESS_KEY_ID = 'AKIARVBBIM6NGTM4WWPX'
+AWS_SECRET_ACCESS_kEY = config('AWS_SECRET_ACCESS_kEY')
+AWS_STORAGE_BUCKET_NAME = 'gfs3'
 
+AWS_S3_FILE_OVERWIRTE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
