@@ -177,7 +177,12 @@ LOGOUT_REDIRECT_URL = 'home'
 CORS_ALLOW_CREDENTIALS = True
 AWS_QUERYSTRING_AUTH = False
 
-
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full',
+        'width': 'auto',
+    },
+}
 if DEBUG:
     import mimetypes
     mimetypes.add_type("application/javascript", ".js", True)

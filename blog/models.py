@@ -19,6 +19,7 @@ class Contact(models.Model):
     message = models.CharField(max_length=500,default="")
     date_added = models.DateTimeField(auto_now_add=True)
 
+
 class Gallery(models.Model):
     thumb = models.ImageField(null=True, blank=True,upload_to="images/",help_text="1024X680",default="")
     photo_small = models.ImageField(null=True, blank=True,upload_to="images/", help_text="900X600", default="")
@@ -58,7 +59,7 @@ class Profile(models.Model):
     photo_big = models.ImageField(null=True, blank=True,upload_to="images/",help_text="600X600")
     description = models.TextField(help_text="long Description")
     description_short = models.TextField(help_text="Short Description")
-    body = RichTextField(blank=True, null=True)
+    body = RichTextUploadingField(blank=True, null=True)
 
     def __str__(self):
         return self.name
