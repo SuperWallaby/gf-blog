@@ -11,7 +11,6 @@
     <meta name="keywords" content={{post.title}}>>
 {% endblock %}
 
-{% "https://dobalove.s3.me-south-1.amazonaws.com/" as baseUrl %}
 
 {%block content%}
                 <!-- PAGE TITLE -->
@@ -187,7 +186,7 @@
                                     <div class="eskimo_comment">
                                         <div class="eskimo_comment_inner">
                                             <div class="eskimo_comment_left">
-                                                <img alt='face' class="comment_img_viewer comment_img_viewer--view" d src='{{baseUrl}}/theblog/images/emoji/{{comment.face}}.png' />
+                                                <img alt='face' class="comment_img_viewer comment_img_viewer--view" d src='https://dobalove.s3.me-south-1.amazonaws.com/theblog/images/emoji/{{comment.face}}.png' />
                                             </div>
                                             <div class="eskimo_comment_right">
                                                 <div class="eskimo_comment_right_inner ">
@@ -266,13 +265,13 @@
                                 <div class="emojiWrap">
                                 <input id="face{{forloop.counter}}" type="radio" name="face" value={{forloop.counter}} >
                                 <label for="face{{forloop.counter}}">
-                                <img class="comment_img" src="{{baseUrl}}/theblog/images/emoji/{{forloop.counter}}.png"/>
+                                <img class="comment_img" src="https://dobalove.s3.me-south-1.amazonaws.com/theblog/images/emoji/{{forloop.counter}}.png"/>
                                 </label>
                                 </div>
                             {% endfor %}
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button onclick="changeImg('{{baseUrl}}/theblog/images/emoji/')" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                                <button onclick="changeImg('https://dobalove.s3.me-south-1.amazonaws.com/theblog/images/emoji/')" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
                             </div>
                             </div>
                             </div>
