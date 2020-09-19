@@ -145,22 +145,29 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+AWS_S3_ENDPOINT_URL = 'https://s3-me-south-1.amazonaws.com'
+AWS_S3_REGION_NAME = 'me-south-1'
+AWS_STORAGE_BUCKET_NAME = 'dobalove'  # or None if using service role
+# AWS_ACCESS_KEY_ID = 'MYACCESSKEYID'  # or None if using service role
+# AWS_SECRET_ACCESS_KEY = 'mysecretaccesskey12345'
+# if False it will create unique file names for every uploaded file
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static/theblog'),
-)
-AWS_S3_HOST = 's3.me-south-1.amazonaws.com'
-AWS_S3_REGION_NAME= config('AWS_S3_REGION_NAME')
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_kEY = config('AWS_SECRET_ACCESS_kEY')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_ACCESS_KEY_ID = None
+AWS_SECRET_ACCESS_KEY= None
+AWS_STORAGE_BUCKET_NAME = 'dobalove'
 
-AWS_S3_FILE_OVERWIRTE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
@@ -169,13 +176,6 @@ LOGOUT_REDIRECT_URL = 'home'
 
 CORS_ALLOW_CREDENTIALS = True
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-
-AMAZONE_CREDENTIAL = {
-    'ACCESS_KEY_ID': 'AKIARVBBIM6NGTM4WWPX',
-    'SECRET_ACCESS_kEY':  config('AWS_SECRET_ACCESS_kEY'),
-    'STORAGE_BUCKET_NAME': 'gfs3'
-}
 
 if DEBUG:
     import mimetypes

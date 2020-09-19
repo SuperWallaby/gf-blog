@@ -3,7 +3,7 @@ from django.db.models import Count
 from taggit.models import Tag
 
 def extras(request):
-    site = Site.objects.get(id=1)
+    site = Site.objects.all().first()
     profile = Profile.objects.get(id=1)
     cats = Category.objects.all()
     recent_post = Post.objects.all()[:5]
