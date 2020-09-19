@@ -219,6 +219,7 @@ def AddCommentView(request,slug):
     			
 			post_id = comment_form.data.get("post_id")
 			parent_id = comment_form.data.get("parent_id")
+			face = comment_form.data.get("face")
 
 			new_comment = comment_form.save(commit=False)
 			if parent_id:
@@ -227,6 +228,7 @@ def AddCommentView(request,slug):
 			# Create Comment object but don't save to database yet
 			# Assign the current post to the comment
 			new_comment.post = Post.objects.get(id=post_id)
+			new_comment.face = face
 
 			# Save the comment to the database
 			new_comment.save()
