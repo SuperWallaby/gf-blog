@@ -1,0 +1,17 @@
+{% extends 'layout.html'%}
+{% load static %}
+
+{%block content%}
+<h1>Create Post</h1>
+<div class="mb-4"> 
+</div>
+    <br/>
+<form id="formToSave" method="post">{% csrf_token %}
+    {{ form.as_p | safe }}
+    {{ form.media }}
+    <br/>
+    <button id="sendbutton" type="submit" class="btn btn-primary btn-lg">Post</button>
+</form>
+<script>
+
+{% endblock %}

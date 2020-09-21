@@ -17,9 +17,11 @@
                 <div class="eskimo-page-title">
                     <h1><span>{{ post.title }}</span></h1>
                     <div class="eskimo-page-title-meta">
+                    {% if post.category %}
                         <div class="eskimo-cat-meta">
                             In <a href="{% url 'category' post.category.slug %}">{{ post.category }}</a>
                         </div>
+                    {% endif %}
                         <div class="eskimo-date-meta">{{ post.pub_date|date }}</div>
                         <div class="eskimo-reading-meta">{{ post.read_time }} min read</div>
                     </div>
@@ -191,10 +193,10 @@
                                             <div class="eskimo_comment_right">
                                                 <div class="eskimo_comment_right_inner ">
                                                     <cite class="eskimo_fn">
-                                                        <a href='author.html'>{{ comment.name }}</a>
+                                                        <a href='#'>{{ comment.name }}</a>
                                                     </cite>
                                                     <div class="eskimo_comment_links">
-                                                        <i class="fa fa-clock-o"></i>{{ comment.date_added|date:"M d, Y at H:m A " }}<a class="reply-btn" onclick="addComment({{comment.pk}})">- Reply</a>
+                                                        <i class="fa fa-clock-o"><;/i>{{ comment.date_added|date:"M d, Y at H:m A " }}<a class="reply-btn" onclick="addComment({{comment.pk}})">- Reply</a>
                                                     </div>
                                                     <div class="eskimo_comment_text">
                                                         <p>{{ comment.body }}</p>

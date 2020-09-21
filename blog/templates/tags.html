@@ -38,9 +38,11 @@
                                 </a>
                                 <div class="card-border">
                                     <div class="card-body">
+                                        {% if post.category %}
                                         <div class="card-category">
                                             <span><a href="{% url 'category' post.category.slug %}">{{post.category}}</a></span>
                                         </div>
+                                        {% endif %}
                                         <h3 class="card-title">
                                             <a href="{% url 'article-detail' post.slug %}">{{post.title}}</a>
                                         </h3>

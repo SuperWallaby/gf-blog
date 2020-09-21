@@ -23,9 +23,11 @@
                     <li>
                         <a href="{% url 'article-detail' post.slug %}"><span class="badge badge-default">{{ post.pub_date|date }}</span></a>
                     </li>
+                    {% if post.category %}
                     <li>
                         <a href="{% url 'category' post.category.slug %}"><span class="badge badge-default">{{ post.category }}2</span></a>
                     </li>
+                    {% endif %}
                 </ul>
                 <div class="clearfix"></div>
                 <img src="{{ post.photo.get_large.url }}" alt="{{ post.photo.thumb_describe }}" />
@@ -52,9 +54,11 @@
                         </a>
                     <div class="card-border">
                         <div class="card-body">
+                         {% if post.category %}
                             <div class="card-category">
                                 <span><a href="{% url 'category' post.category.slug %}">{{ post.category }}</a></span>
                             </div>
+                            {% endif %}
                             <h3 class="card-title"><a href="{% url 'article-detail' post.slug %}">{{ post.title }}</a></h3>
                             <p>{{ post.intro|slice:":150" }}</p>
                         </div>

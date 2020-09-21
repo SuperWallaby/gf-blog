@@ -1,0 +1,160 @@
+{% extends 'layout.html'%}
+{% load static %}
+
+
+
+{%block content%}
+<h1>Create Post</h1>
+<div class="mb-4"> 
+<button id="saveBtn" class="btn btn-info" >Save</button>
+<button id="loadBtn" class="btn btn-default">Load</button>
+</div>
+    <br/>
+<form id="formToSave" method="post">{% csrf_token %}
+    {{ form.as_p | safe }}
+    {{ form.media }}
+    <p >
+    <label>Representative photo</label>
+    <input type="file" id="img" name="img" accept="image/*">
+    <input hidden name="body">
+    </p>
+    <br/>
+    <button onclick="postBtnClick()" id="sendbutton" type="submit" class="btn btn-primary btn-lg">Post</button>
+    <button class="btn btn-default btn-lg">cancel</button>
+</form>
+<script>
+
+function postBtnClick() {
+    var editor = window.editors[0];
+    $("[name='body']").val(editor.getData());
+}
+
+
+class LocalManager {
+    saveLocal(key, value) {
+        var _value = value;
+        if (typeof value === "number") {
+            _value = value.toString();
+        }
+        if (typeof value === "object") {
+            try {
+                _value = JSON.stringify(value);
+            }
+            catch (e) {
+                localStorage.removeItem(key);
+                console.error("LocalManager::saveLocal:stringFyFailed");
+                console.error(e);
+            }
+        }
+        if (typeof _value === "string")
+            localStorage.setItem(key, _value);
+    }
+    getLocalObj(key, or) {
+        var value = localStorage.getItem(key) || "";
+        var result = or;
+        try {
+            result = JSON.parse(value);
+        }
+        catch (e) {
+            localStorage.removeItem(key);
+            console.error("LocalManager::getLocalOj:parseFailed");
+            console.error(e);
+        }
+        return result;
+    }
+    getLocal(key, or) {
+        var item = localStorage.getItem(key) || "";
+        return item || or;
+    }
+    getLocalNum(key, or) {
+        var item = localStorage.getItem(key) || "";
+        return parseInt(item) || or;
+    }
+}
+ 
+var MyLocalManager = new LocalManager()
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    var form = $("#formToSave");
+    $( "#saveBtn" ).on( "click", function( event ) {
+        var editor = window.editors[0];
+        event.preventDefault();
+        var data = form.serializeArray();
+        data = data.slice(1,data.length);
+        var dataBody = data.find(function(d) { return d.name === "body"});
+        dataBody.value = editor.getData();
+        console.log(data)
+        console.log(dataBody)
+        MyLocalManager.saveLocal('post',data);
+    });
+
+    $( "#loadBtn" ).on( "click", function( event ) {
+        event.preventDefault();
+        var editor = window.editors[0];
+        var data = MyLocalManager.getLocalObj('post');
+
+        function set(data) {
+            var name = data['name']
+            var value = data['value']
+
+            console.log(data)
+            if(name === "body")
+                editor.setData(value)
+            else
+                var value = $("[name='" + name + "']").val(value);
+        }
+        data.forEach(set)
+    });
+})
+</script>
+
+
+<style>
+
+#eskimo-footer {
+    display:none!important
+}
+#eskimo-sidebar {
+    display: none!important
+}
+#cke_1_contents {
+    min-height: 400px;
+}
+
+.eskimo-top-icons-wrap {
+    display: none;
+}
+
+{% comment %} 
+h1 {
+    color: white;
+}
+
+label {
+    color: white;
+}
+#eskimo-main-container {
+    background-color: black!important;
+}
+#eskimo-main-container input,#eskimo-main-container textarea,#eskimo-main-container select {
+    background-color: black!important;
+    color: white!important;
+    border-color: white!important;
+}
+#django-ckeditor-widget {
+    filter: brightness(0.8);
+}
+
+
+.helptext {
+    color:white;
+} {% endcomment %}
+</style>
+
+
+{% endblock %}
+
+
+
+
+
