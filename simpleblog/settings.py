@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '_x0oof2u+c43ggecjbex$)-$tq&&2)-yhj%t-767u!a!!d6+fp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'crisma.net', 'ec2-15-237-45-28.eu-west-3.compute.amazonaws.com', '127.0.0.1', '']
