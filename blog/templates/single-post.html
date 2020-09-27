@@ -13,6 +13,8 @@
 
 
 {%block content%}
+
+
                 <!-- PAGE TITLE -->
                 <div class="eskimo-page-title">
                     <h1><span>{{ post.title }}</span></h1>
@@ -34,8 +36,9 @@
                 {% endif %}
                 <!-- POST CONTENT -->
                 <div class="eskimo-page-content">
-                    {{post.body|safe}}
+                    <div id="post-body">
 
+                    </div>
                     
 
                     <form action="{% url 'liked_post' post.slug %}" method="post" >
@@ -195,8 +198,8 @@
                                                     <cite class="eskimo_fn">
                                                         <a href='#'>{{ comment.name }}</a>
                                                     </cite>
-                                                    <div class="eskimo_comment_links">
-                                                        <i class="fa fa-clock-o"><;/i>{{ comment.date_added|date:"M d, Y at H:m A " }}<a class="reply-btn" onclick="addComment({{comment.pk}})">- Reply</a>
+                                                    <div style="line-height:1" class="eskimo_comment_links">
+                                                        <i class="fa fa-clock-o"></i>{{ comment.date_added|date:" M d, Y \a\t h:m A " }}<a class="reply-btn" onclick="addComment({{comment.pk}})">- Reply</a>
                                                     </div>
                                                     <div class="eskimo_comment_text">
                                                         <p>{{ comment.body }}</p>
@@ -298,6 +301,7 @@
 
 <!-- JS FILES -->
 {%block script%}
+    <script type="text/javascript" src="https://dobalove.s3.me-south-1.amazonaws.com/editor/edjsHTML.browser.js"></script>
     <script type="text/javascript" src="{% static 'theblog/js/rrssb.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'theblog/js/featherlight.js' %}"></script>
     <script type="text/javascript" src="{% static 'theblog/js/my.js' %}"></script>
@@ -306,5 +310,15 @@
             document.querySelector(".incomment").style.display="none"
             document.querySelector(".comment" + pk).style.display="block"
         }
+        (function($) {
+            $(document).ready(function() {
+                console.log("a");
+                const edjsParser = edjsHTML();
+                console.log("2");
+                const data = JSON.parse('{{post.body|safe}}');
+                let html = edjsParser.parse(data);
+                $('#post-body').html(html);
+            });
+        })(jQuery);
     </script>
 {% endblock %}

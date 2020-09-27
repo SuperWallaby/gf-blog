@@ -103,3 +103,18 @@
 .like_heart {
     margin-bottom: -1rem !important;
 }
+
+.alert-container {
+    display: flex;
+    top: 2rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.alert {
+    max-width: 500px;
+    width: 100%;
+}

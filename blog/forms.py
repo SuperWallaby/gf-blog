@@ -1,8 +1,9 @@
 from django import forms
-from .models import Post,  Comment
+from .models import Post, Comment, Gallery
 from django.utils.text import slugify
 import unidecode
 from unidecode import unidecode
+import time
 
 
 class CommentForm(forms.ModelForm):
@@ -17,11 +18,15 @@ class CommentForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
+    image = forms.ImageField(widget=forms.FileInput())
+
     def save(self, *args, **kwargs):
         post = super().save(commit=False)
-        print(slugify(self.cleaned_data.get("title")))
-        post.slug = slugify(
-            unidecode(self.cleaned_data.get("title")), allow_unicode=True)
+        strtime = "".join(str(time.time()).split("."))
+        slug = unidecode(post.title)
+        string = "%s-%s" % (slug, strtime[7:])
+        self.slug = slugify(string, allow_unicode=True)
+
         post.save()
         return post
 

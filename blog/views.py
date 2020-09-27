@@ -321,7 +321,12 @@ class PostCreateView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         post = form.save()
+        if self.request.FILES['image'] is not None:
+            instance = Gallery(thumb=self.request.FILES['image'])
+            instance.save()
+            post.photo = instance
         messages.success(self.request, "Product Uploaded")
+        post.save()
         return redirect(post.get_absolute_url())
         # except Exception:
         # return redirect(reverse("home"))

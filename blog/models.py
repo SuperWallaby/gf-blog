@@ -2,12 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse, reverse_lazy
 from datetime import datetime, date
-from ckeditor.fields import RichTextField
-from ckeditor_uploader.fields import RichTextUploadingField
 from share import models as share_models
 from taggit.managers import TaggableManager
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
+from django_editorjs import EditorJsField
 
 
 class SubScriber(models.Model):
@@ -68,7 +67,6 @@ class Profile(models.Model):
         null=True, blank=True, upload_to="images/", help_text="600X600")
     description = models.TextField(help_text="long Description")
     description_short = models.TextField(help_text="Short Description")
-    body = RichTextUploadingField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -133,6 +131,16 @@ class Post(share_models.PostTypeModel):
     view_count = models.IntegerField(default=0)
     photo = models.ForeignKey(Gallery, default=None,
                               blank=True, null=True, on_delete=models.SET_NULL)
+    body = EditorJsField(editorjs_config={
+        'holder': 'holder',
+        "tools": {
+            "Table": {
+                "disabled": False,
+                "inlineToolbar": True,
+                "config": {"rows": 2, "cols": 3, },
+            }
+        }
+    })
 
     def tag_names(self):
         return self.tags.names()

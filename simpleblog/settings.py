@@ -51,10 +51,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'share',
-    'django_ckeditor_5',
     'corsheaders',
     'django_filters',
     'taggit',
+    'django_editorjs',
     'storages',
 
 ]
@@ -150,27 +150,15 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-AWS_S3_ENDPOINT_URL = 'https://s3-me-south-1.amazonaws.com'
-AWS_S3_REGION_NAME = 'me-south-1'
-AWS_STORAGE_BUCKET_NAME = 'dobalove'  # or None if using service role
+# or None if using service role
 # AWS_ACCESS_KEY_ID = 'MYACCESSKEYID'  # or None if using service role
 # AWS_SECRET_ACCESS_KEY = 'mysecretaccesskey12345'
 # if False it will create unique file names for every uploaded file
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-AWS_ACCESS_KEY_ID = None
-AWS_SECRET_ACCESS_KEY = None
-AWS_STORAGE_BUCKET_NAME = 'dobalove'
 
-AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATIC_ROOT = "staticfiles/"
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-AWS_S3_SIGNATURE_VERSION = 's3v4'
-
-CKEDITOR_UPLOAD_PATH = "uploads/"
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
@@ -178,58 +166,23 @@ LOGOUT_REDIRECT_URL = 'home'
 CORS_ALLOW_CREDENTIALS = True
 AWS_QUERYSTRING_AUTH = False
 
-CKEDITOR_RESTRICT_BY_USER = True
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-CKEDITOR_5_CUSTOM_CSS = 'path_to.css'
-CKEDITOR_5_CONFIGS = {
-    'default': {
-        'toolbar': ['heading', '|', 'bold', 'italic', 'link',
-                    'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
-
-    },
-    'extends': {
-        'blockToolbar': [
-            'paragraph', 'heading1', 'heading2', 'heading3',
-            '|',
-            'bulletedList', 'numberedList',
-            '|',
-            'blockQuote', 'imageUpload'
-        ],
-        'toolbar': ['heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
-                    'code', 'subscript', 'superscript', 'highlight', '|',
-                    'bulletedList', 'numberedList', 'todoList', '|',  'blockQuote', 'imageUpload', '|',
-                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'mediaEmbed', 'removeFormat',
-                    'insertTable', ],
-        'image': {
-            'toolbar': ['imageTextAlternative', 'imageTitle', '|', 'imageStyle:alignLeft', 'imageStyle:full',
-                        'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:side',  '|'],
-            'styles': [
-                'full',
-                'side',
-                'alignLeft',
-                'alignRight',
-                'alignCenter',
-            ]
-
-        },
-        'table': {
-            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells',
-                               'tableProperties', 'tableCellProperties'],
-        },
-        'heading': {
-            'options': [
-                {'model': 'paragraph', 'title': 'Paragraph',
-                    'class': 'ck-heading_paragraph'},
-                {'model': 'heading1', 'view': 'h1', 'title': 'Heading 1',
-                    'class': 'ck-heading_heading1'},
-                {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2',
-                    'class': 'ck-heading_heading2'},
-                {'model': 'heading3', 'view': 'h3',
-                    'title': 'Heading 3', 'class': 'ck-heading_heading3'}
-            ]
-        }
-    }
-}
 if DEBUG:
     import mimetypes
     mimetypes.add_type("application/javascript", ".js", True)
+
+
+if not DEBUG:
+    AWS_S3_ENDPOINT_URL = 'https://s3-me-south-1.amazonaws.com'
+    AWS_S3_REGION_NAME = 'me-south-1'
+    AWS_STORAGE_BUCKET_NAME = 'dobalove'
+    AWS_ACCESS_KEY_ID = None
+    AWS_DEFAULT_ACL = None
+    AWS_SECRET_ACCESS_KEY = None
+    AWS_STORAGE_BUCKET_NAME = 'dobalove'
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+    AWS_S3_SIGNATURE_VERSION = 's3v4'
+
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
